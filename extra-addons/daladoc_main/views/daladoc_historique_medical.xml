@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Form view for daladoc.historique.medical model -->
+    <record id="daladoc_historique_medical_view_form" model="ir.ui.view">
+        <field name="name">daladoc.historique.medical.view.form</field>
+        <field name="model">daladoc.historique.medical</field>
+        <field name="arch" type="xml">
+            <form string="Historique Medical">
+                <sheet>
+                    <h1><field name="patient_id" readonly="1"/></h1>
+                    <group>                        
+                        <group>
+                            <field name="date" />
+                            <field name="maladie_id" options="{'no_open': True,'no_create': True}"/>
+                            <field name="allowed_treatment_ids" invisible="1"/>
+                            <field name="treatments_ids" widget="many2many_tags" options="{'no_open': True,'no_create': True}"/>
+                        </group>
+                        <group>
+                        </group>
+                        <notebook>
+                            <page name="metrics" string="Metrics">
+                                <field name="metrics_ids">
+                                    <list editable="bottom">
+                                        <field name="historique_medical_id" column_invisible="1"/>
+                                        <field name="metric_id" options="{'no_open': True,'no_create': True}"/>
+                                        <field name="value" />
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

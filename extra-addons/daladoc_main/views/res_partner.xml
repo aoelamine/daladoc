@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_view_partner_form_daladoc" model="ir.ui.view">
+        <field name="name">res.partner.view.form.inherit.daladoc</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='function']" position="after">
+                <field name="gender" string="Sexe"/>
+                <field name="assurance" string="Assurance"/>
+            </xpath>
+
+            <xpath expr="//field[@name='vat']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='parent_id']" position="attributes">
+                <attribute name="placeholder">Parent</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='category_id']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='website']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='contact_addresses']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='sales_purchases']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='internal_notes']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//page[@name='geo_location']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+
+            <xpath expr="//notebook" position="inside">
+                <page name="historique_medical" string="Historique Medical">
+                    <field name="historique_medical_ids">
+                        <list >
+                            <field name="patient_id" readonly="1" column_invisible="1"/>
+                            <field name="date" />
+                            <field name="maladie_id" />
+                            <field name="treatments_ids" widget="many2many_tags"/>
+                            <field name="metrics_ids" widget="many2many_tags"/>
+                        </list>
+                    </field>
+                </page>
+                <page name="femme_info" string="Informations sur la femme" invisible="gender != 'female'">
+                    <group >
+                        <field name="is_enceinte" />
+                    </group>
+                </page>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

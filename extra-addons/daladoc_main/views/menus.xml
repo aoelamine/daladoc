@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Main Menu  -->
+    <menuitem
+        id="Daladoc_maladie_menu"
+        name="Daladoc"
+        sequence="10"/>
+
+    <!-- Configuration Menu  -->        
+    <menuitem
+        id="configuration_menu"
+        name="Configuration"
+        parent="Daladoc_maladie_menu"
+        sequence="10"/>
+    
+    <!-- Maladie Menu  -->
+    <menuitem
+        id="maladies_menu"
+        name="Maladies"
+        action="daladoc_maladie_action"
+        parent="configuration_menu"
+        sequence="10"/>
+
+
+        
+    <!-- Treatments Menu  -->
+    <menuitem
+        id="treatments_menu"
+        name="Treatments"
+        action="daladoc_treatments_action"
+        parent="configuration_menu"
+        sequence="20"/>
+
+
+        
+    <!-- Maladie Menu  -->
+    <menuitem
+        id="metrics_menu"
+        name="Metrics"
+        action="daladoc_metrics_action"
+        parent="configuration_menu"
+        sequence="30"/>
+
+
+</odoo>

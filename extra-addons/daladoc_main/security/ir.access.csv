@@ -1,0 +1,8 @@
+id,name,model_id,group_id/id,operation,domain
+access_daladoc_maladie_all,access_daladoc_maladie_all,daladoc.maladie,base.group_user,crud,
+access_daladoc_metrics,access_daladoc_metrics,daladoc.metrics,base.group_user,crud,
+access_daladoc_treatments,access_daladoc_treatments,daladoc.treatments,base.group_user,crud,
+
+access_daladoc.historique.medical,access_daladoc.historique.medical,daladoc.historique.medical,base.group_user,crud,
+access_daladoc_metrics_historique,access_daladoc_metrics_historique,daladoc.metrics.historique,base.group_user,crud,
+
