@@ -7,6 +7,9 @@
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='function']" position="after">
+                <field name="is_doctor" />
+                <field name="is_patient" />
+                <field name="is_assistant" />
                 <field name="gender" string="Sexe"/>
                 <field name="assurance" string="Assurance"/>
             </xpath>

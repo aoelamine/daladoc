@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Form View – Medical Visit Workflow                            -->
+    <!-- ============================================================ -->
+    <record id="daladoc_visit_view_form" model="ir.ui.view">
+        <field name="name">daladoc.visit.view.form</field>
+        <field name="model">daladoc.visit</field>
+        <field name="arch" type="xml">
+            <form string="Medical Visit">
+                <header>
+                    <!-- Statusbar widget showing the workflow progression -->
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="check_in,chief_complaint,examination,referrals,summary"/>
+
+                    <!-- Workflow buttons – each visible only in its preceding state -->
+                    <button name="action_start_complaint"
+                            string="Proceed to Anamnesis"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'check_in'"/>
+
+                    <button name="action_start_examination"
+                            string="Proceed to Examination"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'chief_complaint'"/>
+
+                    <button name="action_start_referrals"
+                            string="Proceed to Prescriptions"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'examination'"/>
+
+                    <button name="action_start_summary"
+                            string="Proceed to Summary"
+                            type="object"
+                            class="btn-primary"
+                            invisible="state != 'referrals'"/>
+
+                    <button name="action_close_visit"
+                            string="Close Visit"
+                            type="object"
+                            class="btn-success"
+                            invisible="state != 'summary' or closed_date"
+                            confirm="Are you sure you want to close this visit?"/>
+
+                    <!-- Back buttons (secondary) -->
+                    <button name="action_start_checkin"
+                            string="Back to Check-in"
+                            type="object"
+                            class="btn-secondary"
+                            invisible="state == 'check_in'"/>
+                </header>
+
+                <sheet>
+                    <!-- ===== Title Area ===== -->
+                    <div class="oe_title">
+                        <h1>
+                            <field name="patient_id" placeholder="Select Patient..."
+                                   options="{'no_open': True}"/>
+                        </h1>
+                    </div>
+
+                    <!-- Visit date – always visible -->
+                    <group>
+                        <group>
+                            <field name="visit_date"/>
+                        </group>
+                        <group>
+                            <field name="closed_date" invisible="not closed_date"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================================ -->
+                    <!-- STATE 1: Check-in & Vitals                                    -->
+                    <!-- ============================================================ -->
+                    <group string="Check-in &amp; Vitals"
+                           invisible="state != 'check_in'">
+                        <group string="Assignment">
+                            <field name="doctor_id" options="{'no_open': True}"/>
+                        </group>
+                        <group string="Vitals">
+                            <field name="vitals_weight"/>
+                            <field name="vitals_height"/>
+                            <field name="vitals_bp"/>
+                            <field name="vitals_temp"/>
+                            <field name="vitals_heart_rate"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================================ -->
+                    <!-- STATE 2: Anamnesis & Chief Complaint                          -->
+                    <!-- ============================================================ -->
+                    <group string="Anamnesis &amp; Chief Complaint"
+                           invisible="state != 'chief_complaint'">
+                        <group colspan="2">
+                            <field name="chief_complaint" placeholder="Primary reason for the visit..."/>
+                        </group>
+                        <group colspan="2">
+                            <!--<field name="symptom_tag_ids" widget="many2many_tags"
+                                   options="{'color_field': 'color'}"/>-->
+                        </group>
+                        <group colspan="2">
+                            <field name="history_of_present_illness"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="lifestyle_notes" placeholder="Smoking, alcohol, exercise, diet..."/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================================ -->
+                    <!-- STATE 3: Clinical Examination & Assessment                    -->
+                    <!-- ============================================================ -->
+                    <group string="Clinical Examination &amp; Assessment"
+                           invisible="state != 'examination'">
+                        <group colspan="2">
+                            <field name="physical_exam_notes"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="diagnosis_description"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================================ -->
+                    <!-- STATE 4: Prescriptions & Referrals                            -->
+                    <!-- ============================================================ -->
+                    <group string="Prescriptions &amp; Referrals"
+                           invisible="state != 'referrals'">
+
+                        <group colspan="2" string="Procedures">
+                            <!--<field name="procedure_performed_ids" widget="many2many_tags" nolabel="1"/>-->
+                        </group>
+
+                        <group colspan="2" string="Prescriptions">
+                            <!--<field name="prescription_line_ids" nolabel="1">
+                                <list editable="bottom">
+                                    <field name="visit_id" column_invisible="1"/>
+                                </list>
+                            </field>-->
+                        </group>
+
+                        <group string="Sick Leave">
+                            <field name="requires_sick_leave"/>
+                            <field name="sick_leave_days"
+                                   invisible="not requires_sick_leave"/>
+                        </group>
+
+                        <group string="Referrals &amp; Follow-Up">
+                            <field name="referral_notes" placeholder="Specialist referral details..."/>
+                            <field name="next_followup_date"/>
+                        </group>
+                    </group>
+
+                    <!-- ============================================================ -->
+                    <!-- STATE 5: Summary, Validation & Billing                        -->
+                    <!-- ============================================================ -->
+                    <group string="Summary, Validation &amp; Billing"
+                           invisible="state != 'summary'">
+                        <group colspan="2">
+                            <field name="consultation_summary"/>
+                        </group>
+                        <group>
+                            <field name="payment_status" widget="radio"/>
+                        </group>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- ============================================================ -->
+    <!-- List / Tree View                                              -->
+    <!-- ============================================================ -->
+    <record id="daladoc_visit_view_list" model="ir.ui.view">
+        <field name="name">daladoc.visit.view.list</field>
+        <field name="model">daladoc.visit</field>
+        <field name="arch" type="xml">
+            <list string="Medical Visits" decoration-info="state == 'check_in'"
+                  decoration-warning="state in ('chief_complaint','examination','referrals')"
+                  decoration-success="state == 'summary' and closed_date"
+                  default_order="visit_date desc">
+                <field name="visit_date"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'check_in'"
+                       decoration-warning="state in ('chief_complaint','examination','referrals')"
+                       decoration-success="state == 'summary'"/>
+                <field name="payment_status" widget="badge"
+                       decoration-danger="payment_status == 'unpaid'"
+                       decoration-success="payment_status == 'paid'"
+                       decoration-muted="payment_status == 'exempt'"
+                       optional="show"/>
+                <field name="closed_date" optional="hide"/>
+            </list>
+        </field>
+    </record>
+
+
+    <!-- ============================================================ -->
+    <!-- Search View                                                   -->
+    <!-- ============================================================ 
+    <record id="daladoc_visit_view_search" model="ir.ui.view">
+        <field name="name">daladoc.visit.view.search</field>
+        <field name="model">daladoc.visit</field>
+        <field name="arch" type="xml">
+            <search string="Search Visits">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <filter string="Today" name="filter_today"
+                                        domain="[
+                                            ('visit_date', '&gt;=', context_today()),
+                                            ('visit_date', '&lt;', context_today() + relativedelta(days=1))
+                                        ]"/>
+                <separator/>
+                <filter string="Check-in" name="filter_checkin" domain="[('state','=','check_in')]"/>
+                <filter string="Anamnesis" name="filter_complaint" domain="[('state','=','chief_complaint')]"/>
+                <filter string="Examination" name="filter_examination" domain="[('state','=','examination')]"/>
+                <filter string="Prescriptions" name="filter_referrals" domain="[('state','=','referrals')]"/>
+                <filter string="Summary" name="filter_summary" domain="[('state','=','summary')]"/>
+                <separator/>
+                <filter string="Open Visits" name="filter_open" domain="[('closed_date','=',False)]"/>
+                <filter string="Closed Visits" name="filter_closed" domain="[('closed_date','!=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Stage" name="groupby_state" context="{'group_by':'state'}"/>
+                    <filter string="Doctor" name="groupby_doctor" context="{'group_by':'doctor_id'}"/>
+                    <filter string="Patient" name="groupby_patient" context="{'group_by':'patient_id'}"/>
+                    <filter string="Payment" name="groupby_payment" context="{'group_by':'payment_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>-->
+
+
+    <!-- ============================================================ -->
+    <!-- Action                                                        -->
+    <!-- ============================================================ -->
+    <record id="daladoc_visit_action" model="ir.actions.act_window">
+        <field name="name">Medical Visits</field>
+        <field name="res_model">daladoc.visit</field>
+        <field name="view_mode">list,form</field>
+        <!--<field name="search_view_id" ref="daladoc_visit_view_search"/>
+        <field name="context">{'search_default_filter_open': 1}</field>-->
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Start a new medical visit
+            </p>
+            <p>
+                Track the entire patient visit workflow from check-in to closure.
+            </p>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Visit sub-menu under the Daladoc main menu parent="daladoc_main.Daladoc_maladie_menu" -->
+    <menuitem
+        id="visit_menu"
+        name="Visits"
+        action="daladoc_visit_action"
+        sequence="1"/>
+
+</odoo>
