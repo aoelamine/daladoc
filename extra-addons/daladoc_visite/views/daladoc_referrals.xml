@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Form View – Referral                                          -->
+    <!-- ============================================================ -->
+    <record id="daladoc_referrals_view_form" model="ir.ui.view">
+        <field name="name">daladoc.referrals.view.form</field>
+        <field name="model">daladoc.referrals</field>
+        <field name="arch" type="xml">
+            <form string="Referral">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                        </group>
+                        <group>
+                            <field name="visit_id" readonly="1"/>
+                            <field name="date_referrals"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List View – Referral                                          -->
+    <!-- ============================================================ -->
+    <record id="daladoc_referrals_view_list" model="ir.ui.view">
+        <field name="name">daladoc.referrals.view.list</field>
+        <field name="model">daladoc.referrals</field>
+        <field name="arch" type="xml">
+            <list string="Referrals">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_referrals"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

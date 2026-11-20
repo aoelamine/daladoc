@@ -60,13 +60,14 @@
                         <h1>
                             <field name="patient_id" placeholder="Select Patient..."
                                    options="{'no_open': True}"/>
+                            <field name="name"/>
                         </h1>
                     </div>
 
                     <!-- Visit date – always visible -->
                     <group>
                         <group>
-                            <field name="visit_date"/>
+                            <field name="visit_date" invisible="state != 'check_in'"/>
                         </group>
                         <group>
                             <field name="closed_date" invisible="not closed_date"/>
@@ -126,31 +127,58 @@
                     <!-- ============================================================ -->
                     <!-- STATE 4: Prescriptions & Referrals                            -->
                     <!-- ============================================================ -->
+                    <div class="oe_button_box" name="button_box"
+                         invisible="state != 'referrals'">
+                        <button name="action_view_prescriptions"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-medkit"
+                                invisible="state != 'referrals'">
+                            <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                        </button>
+                        <button name="action_view_lab_tests"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-flask"
+                                invisible="state != 'referrals'">
+                            <field name="lab_test_count" widget="statinfo" string="Lab Tests"/>
+                        </button>
+                        <button name="action_view_referrals"
+                                type="object"
+                                class="oe_stat_button"
+                                icon="fa-share-square-o"
+                                invisible="state != 'referrals'">
+                            <field name="referral_count" widget="statinfo" string="Referrals"/>
+                        </button>
+                    </div>
+
                     <group string="Prescriptions &amp; Referrals"
                            invisible="state != 'referrals'">
 
-                        <group colspan="2" string="Procedures">
-                            <!--<field name="procedure_performed_ids" widget="many2many_tags" nolabel="1"/>-->
-                        </group>
+                            <button name="action_create_prescription"
+                                    string="Create Prescription"
+                                    type="object"
+                                    class="btn-primary"
+                                    />
 
-                        <group colspan="2" string="Prescriptions">
-                            <!--<field name="prescription_line_ids" nolabel="1">
-                                <list editable="bottom">
-                                    <field name="visit_id" column_invisible="1"/>
-                                </list>
-                            </field>-->
-                        </group>
+                            <button name="action_create_lab_test"
+                                    string="Request Lab Test"
+                                    type="object"
+                                    class="btn-primary"
+                                    />
 
-                        <group string="Sick Leave">
-                            <field name="requires_sick_leave"/>
-                            <field name="sick_leave_days"
-                                   invisible="not requires_sick_leave"/>
-                        </group>
+                            <button name="action_create_referral"
+                                string="Create Referral"
+                                type="object"
+                                class="btn-primary"
+                                />
+                        
+                    </group>
 
-                        <group string="Referrals &amp; Follow-Up">
-                            <field name="referral_notes" placeholder="Specialist referral details..."/>
-                            <field name="next_followup_date"/>
-                        </group>
+                    <group string="Sick Leave">
+                        <field name="requires_sick_leave"/>
+                        <field name="sick_leave_days"
+                                invisible="not requires_sick_leave"/>
                     </group>
 
                     <!-- ============================================================ -->

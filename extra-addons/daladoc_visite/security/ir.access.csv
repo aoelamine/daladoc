@@ -1,2 +1,7 @@
 id,name,model_id,group_id/id,operation,domain
 access_daladoc_visit_all,access_daladoc_visit_all,daladoc.visit,base.group_user,crud,
+access_daladoc_meds,access_daladoc_meds,daladoc.meds,base.group_user,crud,
+access_daladoc_prescription,access_daladoc_prescription,daladoc.prescription,base.group_user,crud,
+access_daladoc_prescription_line,access_daladoc_prescription_line,daladoc.prescription.line,base.group_user,crud,
+access_daladoc_lab_test,access_daladoc_lab_test,daladoc.lab.test,base.group_user,crud,
+access_daladoc_referrals,access_daladoc_referrals,daladoc.referrals,base.group_user,crud,

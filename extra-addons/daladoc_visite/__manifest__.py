@@ -12,6 +12,9 @@
 
         # Views
         'views/daladoc_visit.xml',
+        'views/daladoc_prescription.xml',
+        'views/daladoc_lab_test.xml',
+        'views/daladoc_referrals.xml',
 
         # Menus
         'views/menus.xml',

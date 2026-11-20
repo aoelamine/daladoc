@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Form View – Prescription                                      -->
+    <!-- ============================================================ -->
+    <record id="daladoc_prescription_view_form" model="ir.ui.view">
+        <field name="name">daladoc.prescription.view.form</field>
+        <field name="model">daladoc.prescription</field>
+        <field name="arch" type="xml">
+            <form string="Prescription">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                        </group>
+                        <group>
+                            <field name="visit_id" readonly="1"/>
+                            <field name="date_prescribed"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Medications" name="medications">
+                            <field name="medication_ids">
+                                <list editable="bottom">
+                                    <field name="medication_id"/>
+                                    <field name="dosage"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Notes" name="notes">
+                            <field name="notes"/>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List View – Prescription                                      -->
+    <!-- ============================================================ -->
+    <record id="daladoc_prescription_view_list" model="ir.ui.view">
+        <field name="name">daladoc.prescription.view.list</field>
+        <field name="model">daladoc.prescription</field>
+        <field name="arch" type="xml">
+            <list string="Prescriptions">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_prescribed"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- ============================================================ -->
+    <!-- Form View – Lab Test                                          -->
+    <!-- ============================================================ -->
+    <record id="daladoc_lab_test_view_form" model="ir.ui.view">
+        <field name="name">daladoc.lab.test.view.form</field>
+        <field name="model">daladoc.lab.test</field>
+        <field name="arch" type="xml">
+            <form string="Lab Test">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="patient_id"/>
+                            <field name="doctor_id"/>
+                        </group>
+                        <group>
+                            <field name="visit_id" readonly="1"/>
+                            <field name="date_requested"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- ============================================================ -->
+    <!-- List View – Lab Test                                          -->
+    <!-- ============================================================ -->
+    <record id="daladoc_lab_test_view_list" model="ir.ui.view">
+        <field name="name">daladoc.lab.test.view.list</field>
+        <field name="model">daladoc.lab.test</field>
+        <field name="arch" type="xml">
+            <list string="Lab Tests">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="date_requested"/>
+            </list>
+        </field>
+    </record>
+
+</odoo>
